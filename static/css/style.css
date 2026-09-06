@@ -230,4 +230,16 @@ h2 {
     .social-links {
         justify-content: flex-start;
     }
+
+    .box-container {
+    flex-direction: column;
+    padding: 0 20px;
+    align-items: flex-start;
+  }
+
+  .divider {
+    width: 4px;
+    height: 40px;
+    align-self: center;
+  }
 }
