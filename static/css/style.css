@@ -6,9 +6,9 @@
 
 :root {
     --ink: #1c1917;
-    --paper: #faf6f0;
-    --accent: #d95d39;
-    --accent-dark: #a8442a;
+    --paper: #f7fff8;
+    --accent: #03C988;
+    --accent-dark: #009d69;
     --line: #e3d9c9;
     --text-muted: #6b6459;
     --radius: 4px;
@@ -23,6 +23,40 @@ body {
 
 h1, .brand {
     font-family: "Space Grotesk", -apple-system, sans-serif;
+}
+
+h2 {
+    font-family: "Space Grotesk", -apple-system, sans-serif;
+    text-align: center;
+    ;
+}
+
+.box-container {
+  display: flex;
+  gap: 5px;
+  padding: 0 20px;
+  margin-top: 20px;
+  align-self: center;
+  justify-content: center;
+}
+
+.box {
+  flex: 0 1;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: white;
+  width: fit-content;
+  min-width: 300px;
+}
+
+.divider {
+  width: 40px;
+  height: 4px;
+  flex-shrink: 0;
+  background-color: var(--accent);
+  border-radius: 2px;
+  align-self: center;
 }
 
 .container {
@@ -58,6 +92,10 @@ h1, .brand {
     color: var(--ink);
     text-decoration: none;
     font-size: 0.95rem;
+}
+
+.education {
+    padding: 1rem 0 5rem;
 }
 
 .hero {
