@@ -6,7 +6,7 @@
 
 :root {
     --ink: #1c1917;
-    --paper: #f7fff8;
+    --paper: #f8fff9;
     --accent: #03C988;
     --accent-dark: #009d69;
     --line: #e3d9c9;
@@ -15,29 +15,53 @@
 }
 
 body {
-    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, "Poppins", Roboto, Helvetica, Arial, sans-serif;
     color: var(--ink);
     background-color: var(--paper);
     line-height: 1.6;
 }
 
 h1, .brand {
-    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-family: "Poppins", -apple-system, sans-serif;
+}
+
+.animate {
+    display: inline-block;
+    border-right: 5px solid;
+    width: 4.5ch;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: 
+        typing 6s steps(6) infinite,
+        cursor .4s step-end infinite alternate;
+}
+
+@keyframes cursor {
+    50% { border-color: transparent;}
+}
+
+@keyframes typing {
+    0% { width: 0; }
+    30% { width: 4.5ch; }
+    80% { width: 4.5ch; }
+    100% { width: 0; }
 }
 
 h2 {
-    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-family: "Poppins", -apple-system, sans-serif;
     text-align: center;
     ;
 }
 
 .box-container {
   display: flex;
-  gap: 5px;
+  gap: 0px;
   padding: 0 20px;
   margin-top: 20px;
   align-self: center;
+  align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .box {
@@ -47,16 +71,20 @@ h2 {
   border-radius: 10px;
   background-color: white;
   width: fit-content;
-  min-width: 300px;
+  min-width: 260px;
+  text-align: center;
+}
+
+.header-box {
+    font-weight: 600;
 }
 
 .divider {
-  width: 40px;
-  height: 4px;
+  width: 4px;
+  height: 40px;
   flex-shrink: 0;
   background-color: var(--accent);
   border-radius: 2px;
-  align-self: center;
 }
 
 .container {
@@ -96,6 +124,7 @@ h2 {
 
 .education {
     padding: 1rem 0 5rem;
+    align-items: center;
 }
 
 .hero {
@@ -232,14 +261,14 @@ h2 {
     }
 
     .box-container {
-    flex-direction: column;
-    padding: 0 20px;
-    align-items: flex-start;
+        flex-direction: column;
+        padding: 0 20px;
+        align-items: center;
   }
 
-  .divider {
-    width: 4px;
-    height: 40px;
-    align-self: center;
+    .divider {
+        width: 4px;
+        height: 40px;
+        align-self: center;
   }
 }
