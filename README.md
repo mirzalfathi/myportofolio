@@ -15,5 +15,5 @@ Kelas : PBP A
 
 === DEKLARASI AI =====
 Menggunakan Claude.ai
-1. Menyempurnakan animasi typing pada teks judul, sebelumnya mengikuti tutorial youtube yang ternyata tidak dapat terintegrasi pada kode yang saya buat.
-2. Membuat divider pada box dalam section education.
+1. Menyempurnakan animasi typing pada teks judul, sebelumnya mengikuti tutorial youtube yang ternyata tidak dapat terintegrasi pada kode yang saya buat. AI dalam kasus ini dapat membantu tetapi masih kurang dalam penyesuaian lebar dan tinggi dalam animasinya sehingga cara mencocokkan kembali.
+2. Membuat divider pada box dalam section education. 
