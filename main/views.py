@@ -14,7 +14,6 @@ def show_main(request):
     }
     return render(request, "index.html", context)
 
-
 def show_experience(request):
     context = {
         "name": "Mirza",
