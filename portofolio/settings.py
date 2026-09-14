@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv(".env.prod")
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "mirza-al-myportofolio.pws.cs.ui.ac.id",]
 
