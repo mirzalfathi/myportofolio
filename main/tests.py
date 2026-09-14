@@ -57,13 +57,29 @@ class MainTest(TestCase):
         self.assertContains(response, "Selesai")
         self.assertNotContains(response, "Sedang berlangsung")
 
-    def test_education_can_be_accessed_with_url(self):
+    def test_education_url_is_accessible(self):
         response = self.client.get(reverse("main:show_education"))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "education.html")
-        self.assertContains(response, self.experience.title)
-        self.assertContains(response, self.experience.description)
-        self.assertContains(response, "S1")
-        self.assertContains(response, "Universitas Indonesia")
         self.assertContains(response, f'href="{reverse("main:show_main")}"')
+
+    def test_education_page_shows_data_when_available(self):
+        education = Education.objects.create(
+            institution_name="Universitas Indonesia",
+            level="s1",
+            major="Sistem Informasi",
+            start_year=2025,
+        )
+        response = self.client.get(reverse("main:show_education"))
+
+        self.assertContains(response, education.institution_name)
+        self.assertContains(response, education.major)
+        self.assertContains(response, "S1")
+        self.assertContains(response, "2025")
+        self.assertContains(response, "Sekarang")
+
+    def test_empty_education_page_shows_empty_state_message(self):
+        response = self.client.get(reverse("main:show_education"))
+
+        self.assertContains(response, "Belum ada riwayat pendidikan yang ditambahkan.")
