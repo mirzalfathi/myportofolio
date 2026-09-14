@@ -24,3 +24,24 @@ class Experience(models.Model):
     @property
     def is_ongoing(self):
         return self.ended_at is None
+
+class Education(models.Model):
+    LEVEL_CHOICES = [
+        ('smp', 'SMP'),
+        ('sma', 'SMA/SMK'),
+        ('s1', 'S1'),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    institution_name = models.CharField(max_length=255)
+    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default='s1')
+    major = models.CharField(max_length=255, blank=True, default="")
+    start_year = models.PositiveIntegerField()
+    end_year = models.PositiveIntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.institution_name} - {self.get_level_display()}"
+
+    @property
+    def is_ongoing(self):
+        return self.ended_at is None
