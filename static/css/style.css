@@ -240,26 +240,36 @@ h2 {
     font-weight: 600;
 }
 
+/*====== Social Links ========*/
+ 
 .social-links {
     display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    justify-content: right;
+    gap: 0.85rem;
 }
-
+ 
 .social-link {
-    display: inline-block;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--paper);
-    background-color: var(--ink);
-    border-radius: var(--radius);
-    padding: 0.5rem 1.1rem;
-    transition: background-color 0.2s ease;
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    background: #ffffff;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(28, 25, 23, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
-
+ 
+.social-link img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+ 
 .social-link:hover {
-    background-color: var(--accent);
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 22px rgba(3, 201, 136, 0.22);
 }
 
 .hero-photo {
