@@ -1,67 +1,43 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ name }} - Portofolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
-    {% block meta %} {% endblock meta %}
-</head>
-<body>
-    <div class="backdrop">
-        <div class="grid-overlay"></div>
-    </div>
-    <header class="site-header">
+{% block content %}
+<main>
+    <section class="hero" id="profile">
         <div class="container">
-            <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
-            <nav>
-                <a href="{% url 'main:show_main' %}">Profile</a>
-                <a href="{% url 'main:show_education' %}">Education</a>
-                <a href="{% url 'main:show_experience' %}">Experience</a>
-        </nav>
-        </div>
-    </header>
-    <main>
-        <section class="hero" id="profile">
-            <div class="container">
-                <div class="hero-grid">
-                    <div class="hero-photo">
-                        <img src="{% static 'img/mirza.svg' %}" alt="Foto {{ name }} Al Fathi">
-                    </div>
-                    <div class="hero-text">
-                        <img class="hero-heading" src="{% static 'img/perkenalan.svg' %}">
-                        <p class="hero-program">Information System @Universitas Indonesia</p>
-                        <p class="hero-bio">
-                            Mahasiswa Ilmu Komputer di Fasilkom Universitas Indonesia dengan minat di
-                            bidang pengembangan software, riset teknologi, dan juga design!
-                        </p>
-                        <div class="social-links">
-                            <a class="social-link" href="https://github.com/mirzalfathi" target="_blank" rel="noopener" aria-label="GitHub">
-                                <img src="{% static 'img/github.svg' %}" alt="GitHub">
-                            </a>
-                            <a class="social-link" href="https://linkedin.com/in/mirza-a-1a3484292/" target="_blank" rel="noopener" aria-label="LinkedIn">
-                                <img src="{% static 'img/linkedin.svg' %}" alt="LinkedIn">
-                            </a>
-                            <a class="social-link" href="mailto:mirzaaf2011@gmail.com" aria-label="Email">
-                                <img src="{% static 'img/mail.svg' %}" alt="Email">
-                            </a>
-                        </div>
+            <div class="hero-grid">
+                <div class="hero-photo">
+                    <img src="{% static 'img/mirza.svg' %}" alt="Foto {{ name }} Al Fathi">
+                </div>
+                <div class="hero-text">
+                    <img class="hero-heading" src="{% static 'img/perkenalan.svg' %}">
+                    <p class="hero-program">Information System @Universitas Indonesia</p>
+                    <p class="hero-bio">
+                        Mahasiswa Ilmu Komputer di Fasilkom Universitas Indonesia dengan minat di
+                        bidang pengembangan software, riset teknologi, dan juga design!
+                    </p>
+                    <div class="social-links">
+                        <a class="social-link" href="https://github.com/mirzalfathi" target="_blank" rel="noopener" aria-label="GitHub">
+                            <img src="{% static 'img/github.svg' %}" alt="GitHub">
+                        </a>
+                        <a class="social-link" href="https://linkedin.com/in/mirza-a-1a3484292/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                            <img src="{% static 'img/linkedin.svg' %}" alt="LinkedIn">
+                        </a>
+                        <a class="social-link" href="mailto:mirzaaf2011@gmail.com" aria-label="Email">
+                            <img src="{% static 'img/mail.svg' %}" alt="Email">
+                        </a>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+</main>
+{% endblock content %}
+
     <footer class="site-footer">
         <div class="container">
             <p>&copy; 2026 {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
         </div>
     </footer>
-</body>
+
 </html>

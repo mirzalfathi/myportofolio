@@ -36,8 +36,10 @@ class Education(models.Model):
     institution_name = models.CharField(max_length=255)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default='s1')
     major = models.CharField(max_length=255, blank=True, default="")
-    start_year = models.PositiveIntegerField()
-    end_year = models.PositiveIntegerField(blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True, default="")
+    image = models.URLField(max_length=500, blank=True, default="")
+    start_year = models.IntegerField()
+    end_year = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.institution_name} - {self.get_level_display()}"
@@ -45,3 +47,5 @@ class Education(models.Model):
     @property
     def is_ongoing(self):
         return self.ended_at is None
+    def is_ongoing(self):
+        return self.end_year is None
