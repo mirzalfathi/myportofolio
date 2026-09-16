@@ -55,16 +55,25 @@ h2 {
 
 .site-header {
     position: relative;
+    margin: 1rem auto 0;
+    width: 100%;
+    max-width: 960px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(248, 255, 249, 0.45);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: 0 8px 24px rgba(22, 104, 189, 0.10);
     z-index: 5;
-    border-bottom: 1px solid var(--line);
-    background-color: var(--paper);
 }
 
 .site-header .container {
+    position: relative;
+    z-index: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 1.5rem;
+    padding: 0.75rem 2rem;
 }
 
 .brand {
@@ -83,6 +92,27 @@ h2 {
     color: var(--ink);
     text-decoration: none;
     font-size: 0.95rem;
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.site-header nav a:hover,
+.site-header nav a:focus-visible {
+    color: var(--blue);
+}
+
+.site-header nav a.cta {
+    border-color: var(--blue-soft);
+    color: var(--ink);
+}
+
+.site-header nav a.cta:hover,
+.site-header nav a.cta:focus-visible {
+    background: var(--blue);
+    color: var(--white);
+    border-color: var(--blue);
 }
 
 /* ================= ANIMATION ================= */
@@ -123,10 +153,21 @@ h2 {
 }
 
 /* ================= HERO ================= */
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
 main {
     position: relative;
     z-index: 5;
+    flex: 1;
 }
 
 .hero {
@@ -266,14 +307,12 @@ main {
 
 .education {
     padding: 1rem 0 5rem;
-    align-items: center;
 }
 
 /* ================= EXPERIENCE ================= */
 
 .experience-section {
     padding: 4rem 0;
-    border-top: 1px solid var(--line);
 }
 
 .section-kicker {
