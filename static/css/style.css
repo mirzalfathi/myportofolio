@@ -923,5 +923,40 @@ main {
         font-size: 0.85rem;
     }
 
-    
+    .education-header,
+    .experience-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .education-header h1,
+    .experience-header h1 {
+        font-size: clamp(1.4rem, 8vw, 2rem);
+    }
+
+    .section-kicker {
+        font-size: 0.7rem;
+    }
+
+    .education-add-button,
+    .experience-add-button {
+        white-space: normal;
+        text-align: center;
+    }
+
+    .education-grid,
+    .experience-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .education-search,
+    .experience-search {
+        flex-direction: column;
+    }
+
+    .education-search .button,
+    .experience-search .button {
+        width: 100%;
+    }
 }
