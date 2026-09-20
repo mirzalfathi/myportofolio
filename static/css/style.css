@@ -169,6 +169,7 @@ main {
     position: relative;
     z-index: 5;
     flex: 1;
+    min-width: 0;
 }
 
 .hero {
@@ -368,6 +369,93 @@ main {
     background: black;
 }
 
+/* ================= EDUCATION DELETE (PopOut) ================= */
+
+.education-delete-modal {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.education-delete-modal:not(:popover-open) {
+    display: none;
+}
+
+.education-delete-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.education-delete-modal__content {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.75rem;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.education-delete-modal__content h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.education-delete-modal__content p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.education-delete-modal__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.education-delete-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.education-delete-modal__actions form {
+    margin: 0;
+}
+
+.button-danger {
+    background: #b42318;
+}
+
+.button-danger:hover {
+    background: #8c1a12;
+}
+
 /* ================= EDUCATION IMAGE ================= */
 
 .experience-image {
@@ -458,6 +546,180 @@ main {
     object-fit: cover;
     border-radius: var(--radius);
     margin-bottom: 0.75rem;
+}
+
+/* ================= EXPERIENCE HEADER ================= */
+
+.experience-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0.4rem 0 1.5rem;
+}
+
+.experience-header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.experience-add-button {
+    background: var(--ink);
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.experience-add-button:hover {
+    background: black;
+}
+
+/* ================= EXPERIENCE SEARCH ================= */
+
+.experience-search {
+    display: flex;
+    width: 100%;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.experience-search__input {
+    flex: 1;
+    padding: 0.85rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font: inherit;
+}
+
+.experience-search__input:focus {
+    outline: none;
+    border-color: var(--blue);
+}
+
+.experience-search .button {
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius);
+    background: var(--ink);
+    flex-shrink: 0;
+}
+
+.experience-search .button:hover {
+    background: black;
+}
+
+/* ================= EXPERIENCE DELETE (PopOut) ================= */
+
+.experience-delete-modal {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.experience-delete-modal:not(:popover-open) {
+    display: none;
+}
+
+.experience-delete-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.experience-delete-modal__content {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.75rem;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.experience-delete-modal__content h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.experience-delete-modal__content p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.experience-delete-modal__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.experience-delete-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.experience-delete-modal__actions form {
+    margin: 0;
+}
+
+.button-danger {
+    background: #b42318;
+}
+
+.button-danger:hover {
+    background: #8c1a12;
+}
+
+/* ================= EXPERIENCE IMAGE ================= */
+
+.experience-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+/* ================= EXPERIENCE GRID ================= */
+
+.experience-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.experience-grid .experience-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.experience-card-actions {
+    margin-top: auto;
 }
 
 /* ================= BACKGROUND ================= */
@@ -641,4 +903,25 @@ main {
         height: 40px;
         align-self: center;
     }
+
+    .site-header .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        margin: auto;
+    }
+
+    .site-header nav {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .site-header nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    
 }

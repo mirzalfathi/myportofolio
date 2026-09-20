@@ -16,8 +16,8 @@ class Experience(models.Model):
     description = models.TextField()
     category = models.CharField(max_length=20, choices=EXPERIENCE_CHOICES, default='full-time')
     thumbnail = models.URLField(blank=True, null=True)
-    started_at = models.DateTimeField(auto_now_add=True)
-    ended_at = models.DateTimeField(blank=True, null=True)
+    started_at = models.IntegerField()
+    ended_at = models.IntegerField(blank=True, null=True)
     def __str__(self):
         return self.title
     
@@ -34,7 +34,7 @@ class Education(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     institution_name = models.CharField(max_length=255)
-    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default='s1')
+    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default='S1')
     major = models.CharField(max_length=255, blank=True, default="")
     description = models.CharField(max_length=255, blank=True, default="")
     image = models.URLField(max_length=500, blank=True, default="")
@@ -45,7 +45,5 @@ class Education(models.Model):
         return f"{self.institution_name} - {self.get_level_display()}"
 
     @property
-    def is_ongoing(self):
-        return self.ended_at is None
     def is_ongoing(self):
         return self.end_year is None

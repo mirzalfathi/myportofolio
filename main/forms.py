@@ -1,6 +1,5 @@
 from django.forms import ModelForm, TextInput, Textarea, URLInput, NumberInput
-from main.models import Education
-
+from main.models import Education, Experience
 
 class EducationForm(ModelForm):
     class Meta:
@@ -28,7 +27,7 @@ class EducationForm(ModelForm):
         widgets = {
             "institution_name": TextInput(
                 attrs={
-                    "placeholder": "Universitas",
+                    "placeholder": "misal: Universitas Indonesia",
                     "maxlength": 255,
                 }
             ),
@@ -39,7 +38,7 @@ class EducationForm(ModelForm):
             ),
             "major": TextInput(
                 attrs={
-                    "placeholder": "Sistem Informasi",
+                    "placeholder": "misal: Sistem Informasi",
                 }
             ),
             "description": Textarea(
@@ -54,12 +53,67 @@ class EducationForm(ModelForm):
             ),
             "start_year": NumberInput(
                 attrs={
-                    "placeholder": "2026",
+                    "placeholder": "misal: 2022",
                 }
             ),
             "end_year": NumberInput(
                 attrs={
-                    "placeholder": "2026",
+                    "placeholder": "misal: 2026",
+                }
+            ),
+        }
+
+class ExperienceForm(ModelForm):
+    class Meta:
+        model = Experience
+        fields = [
+            "title",
+            "description",
+            "category",
+            "thumbnail",
+            "started_at",
+            "ended_at",
+        ]
+
+        labels = {
+            "title": "Nama Pengalaman",
+            "description": "Deskripsi",
+            "category": "Kategori",
+            "thumbnail": "Upload Thumbnail",
+            "started_at": "Tahun Dimulai",
+            "ended_at": "Tahun Berakhir",
+        }
+
+        widgets = {
+            "title": TextInput(
+                attrs={
+                    "placeholder": "misal: OSIS MAN 4 Jakarta",
+                    "maxlength": 255,
+                }
+            ),
+            "description": Textarea(
+                attrs={
+                    "placeholder": "Deskripsi pengalaman",
+                }
+            ),
+            "category": TextInput(
+                attrs={
+                    "placeholder": "misal: full-time",
+                }
+            ),
+            "thumbnail": URLInput(
+                attrs={
+                    "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
+                }
+            ),
+            "started_at": NumberInput(
+                attrs={
+                    "placeholder": "misal: 2022",
+                }
+            ),
+            "ended_at": NumberInput(
+                attrs={
+                    "placeholder": "misal: 2026",
                 }
             ),
         }
