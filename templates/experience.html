@@ -21,12 +21,12 @@
                     <input type="search"
                            name="title"
                            value="{{ title_query }}"
-                           placeholder="Cari berdasarkan nama Riwayat Pengalaman"
+                           placeholder="Cari berdasarkan nama Pengalaman"
                            class="experience-search__input"
-                           aria-label="Cari berdasarkan nama Riwayat Pengalaman">
+                           aria-label="Cari berdasarkan nama Pengalaman">
                     <button type="submit" class="button">Cari</button>
                 </form>
-                <div class="experience-grid experience-grid">
+                <div class="experience-grid">
                     {% for experience in experience_list %}
                         <article class="experience-card">
                             {% if experience.thumbnail %}
@@ -37,6 +37,13 @@
                             <h2>{{ experience.title }}</h2>
                             <span class="experience-category">{{ experience.get_category_display }}</span>
                             <p class="experience-description">{{ experience.description }}</p>
+                            <p class="experience-status">
+                                {% if experience.is_ongoing %}
+                                    Sedang berjalan sejak {{ experience.started_at }}
+                                {% else %}
+                                    {{ experience.started_at }} - {{ experience.ended_at }}
+                                {% endif %}
+                            </p>
                             <div class="experience-card-actions">
                                 <div class="experience-actions">
                                     {% include "components/experience_delete_modal.html" with experience=experience %}
