@@ -2,10 +2,10 @@ Nama : Mirza
 NPM : 2506618572
 Kelas : PBP A
 
-=== Deskripsi ===
+============ Deskripsi ============
 Website portofolio pribadi Mirza Al Fathi, dibuat untuk menampilkan profil, riwayat pendidikan, pengalaman, dan lainnya. Proyek ini dibuat sebagai bagian dari tugas mata kuliah pemrograman berbasis platform menggunakan Django.
 
-=== Pertanyaan Reflektif ===
+======= Pertanyaan Reflektif ======
 ### Tugas 1
 1. Saat ini, elemen <article> dan <aside> belum saya diterapkan karena struktur halaman baru mencakup penambahan bagian Education. Penggunaan kedua elemen tersebut direncanakan pada tahap pengembangan berikutnya seiring dengan penambahan fitur-fitur baru.
 2. Setiap elemen harus selalu diikuti dengan align-items dan juga display:flex agar bisa sesuai dengan layar manapun berapapun ukurannya.
@@ -21,7 +21,7 @@ Website portofolio pribadi Mirza Al Fathi, dibuat untuk menampilkan profil, riwa
 2. JSON lebih disukai dibanding XML karena lebih simpel, tanpa tag pembuka-penutup. Browser juga dapat langsung membaca JSON tanpa tools lain, beda dengan XML yang butuh parser sendiri. Selain itu JSON lebih gampang dibaca dan telah menjadi standar hampir semua bahasa pemrograman untuk mengirim data lewat API.
 3. Request masuk --> view yang sesuai dipanggil --> view ambil data dari database pakai Django. Tapi, data hasil ini masih berbentuk Python, bukan JSON. Nah, JSON hanya digunakan untuk tipe data yang bisa dibilang cukup sederhana seperti teks, angka, atau list, oleh karena itu kita harus melakukan serialization terlebih dahulu, lalu mengubah objek model jadi bentuk yang lebih sederhana (dictionary/list) pakai serializers.serialize(). Setelah itu, dibungkus jadi JsonResponse dan dikirim ke client biar bisa langsung dipakai/ditampilkan. Jadi serialization seperti jembatan antara Django dengan format JSON.
 
-=== DEKLARASI AI =====
+========= DEKLARASI AI ===========
 Menggunakan Claude.ai
 1. Menyempurnakan animasi typing pada teks judul, sebelumnya mengikuti tutorial youtube yang ternyata tidak dapat terintegrasi pada kode yang saya buat. AI dalam kasus ini dapat membantu tetapi masih kurang dalam penyesuaian lebar dan tinggi dalam animasinya sehingga cara mencocokkan kembali.
 2. Membuat divider pada box dalam section education. 
