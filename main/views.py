@@ -54,7 +54,7 @@ def get_experience_json(request):
     experience = Experience.objects.all()
 
     if title_query:
-        experience = experience.filter(title_name__icontains=title_query)
+        experience = experience.filter(title__icontains=title_query)
 
     experience_json = serializers.serialize("json", experience)
     return HttpResponse(experience_json, content_type="application/json")
