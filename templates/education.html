@@ -9,11 +9,13 @@
                 <p class="section-kicker">Riwayat pendidikan saya</p>
                 <div class="education-header">
                     <h1>Educations</h1>
+                    {% if user.is_superuser %}
                     <a href="{% url 'main:create_education' %}"
                        class="button education-add-button">
                         <span aria-hidden="true">+</span>
                         Tambah Riwayat Edukasi
                     </a>
+                    {% endif %}
                 </div>
                 <form method="get"
                       action="{% url 'main:show_education' %}"
@@ -39,7 +41,9 @@
                             <p class="experience-description">{{ education.description }}</p>
                             <div class="education-card-actions">
                                 <div class="education-actions">
+                                    {% if user.is_superuser %}
                                     {% include "components/education_delete_modal.html" with education=education %}
+                                    {% endif %}
                                 </div>
                             </div>
                         </article>
