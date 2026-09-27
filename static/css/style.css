@@ -67,6 +67,22 @@ h2 {
     z-index: 5;
 }
 
+
+.nav-user {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.95rem;
+  line-height: 1;
+  margin: 0;
+}
+
+nav.flex {
+  display: flex;
+  align-items: center;
+}
+
 .site-header .container {
     position: relative;
     z-index: 1;
@@ -85,6 +101,7 @@ h2 {
 
 .site-header nav {
     display: flex;
+    align-items: center;
     gap: 2rem;
 }
 
@@ -113,43 +130,6 @@ h2 {
     background: var(--blue);
     color: var(--white);
     border-color: var(--blue);
-}
-
-/* ================= ANIMATION ================= */
-
-.animate {
-    display: inline-block;
-    border-right: 5px solid;
-    width: 4.5ch;
-    white-space: nowrap;
-    overflow: hidden;
-    animation:
-        typing 6s steps(6) infinite,
-        cursor .4s step-end infinite alternate;
-}
-
-@keyframes cursor {
-    50% {
-        border-color: transparent;
-    }
-}
-
-@keyframes typing {
-    0% {
-        width: 0;
-    }
-
-    30% {
-        width: 4.5ch;
-    }
-
-    80% {
-        width: 4.5ch;
-    }
-
-    100% {
-        width: 0;
-    }
 }
 
 /* ================= HERO ================= */
