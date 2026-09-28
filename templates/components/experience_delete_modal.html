@@ -1,12 +1,10 @@
-<p class="experience-status">
-    <button type="button"
-            class="button button-danger"
-            popovertarget="delete-experience-{{ experience.id }}"
-            aria-label="Hapus {{ experience.title }}"
-            title="Hapus riwayat edukasi">
-        Hapus Riwayat Edukasi
-    </button>
-</p>
+<button type="button"
+        class="button button-danger"
+        popovertarget="delete-experience-{{ experience.id }}"
+        aria-label="Hapus {{ experience.title }}"
+        title="Hapus pengalaman">
+    Hapus Pengalaman
+</button>
 <div id="delete-experience-{{ experience.id }}"
      class="experience-delete-modal"
      popover="auto"
@@ -24,7 +22,7 @@
                 popovertarget="delete-experience-{{ experience.id }}"
                 popovertargetaction="hide"
                 aria-label="Tutup konfirmasi hapus">x</button>
-        <h2 id="delete-experience-title-{{ experience.id }}">Hapus Riwayat Edukasi?</h2>
+        <h2 id="delete-experience-title-{{ experience.id }}">Hapus Pengalaman?</h2>
         <p>
             Apakah Anda yakin ingin menghapus
             <strong>{{ experience.title }}</strong>?

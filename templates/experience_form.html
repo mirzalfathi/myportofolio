@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% block meta %}
-    <title>Add Experience - {{ name }}</title>
+    <title>{% if is_edit %}Ubah Pengalaman{% else %}Tambah Pengalaman{% endif %} - {{ name }}</title>
 {% endblock meta %}
 {% block content %}
     <main>
         <section class="experience-section">
             <div class="container">
-                <h1>Add New Experience</h1>
+                <h1>{% if is_edit %}Ubah Pengalaman{% else %}Tambah Pengalaman Baru{% endif %}</h1>
                 <form method="post"
-                    action="{% url 'main:create_experience' %}"
                     class="experience-form"
                     enctype="multipart/form-data">
                     {% csrf_token %}
@@ -21,7 +20,9 @@
                             {% endfor %}
                         </div>
                     {% endfor %}
-                    <button type="submit" class="button">Tambah Pengalaman</button>
+                    <button type="submit" class="button">
+                        {% if is_edit %}Simpan Perubahan{% else %}Tambah Pengalaman{% endif %}
+                    </button>
                     <a href="{% url 'main:show_experience' %}" class="button button-secondary">Batal</a>
                 </form>
             </div>
