@@ -846,7 +846,7 @@ main {
 }
 
 .button-star.is-starred {
-    background: var(--yellow);
+    background: var(--orange);
     color: var(--ink);
 }
 
