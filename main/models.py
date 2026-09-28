@@ -37,7 +37,7 @@ class Education(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     institution_name = models.CharField(max_length=255)
-    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default='s1')
+    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default='S1')
     major = models.CharField(max_length=255, blank=True, default="")
     description = models.CharField(max_length=255, blank=True, default="")
     image = models.URLField(max_length=500, blank=True, default="")

@@ -24,7 +24,7 @@ urlpatterns = [
     path("education/add/", create_education, name="create_education"),
     path("api/education/", get_education_json, name="get_education_json"),
     path("education/<uuid:education_id>/delete/", delete_education,name="delete_education"),
-    path("education/<uuid:education_id>/edit/", edit_education, name="edit_education"),
+    path("experience/<uuid:education_id>/edit/", edit_education, name="edit_education"),
 
     path("experience/", show_experience, name="show_experience"),
     path("experience/add/", create_experience, name="create_experience"),
