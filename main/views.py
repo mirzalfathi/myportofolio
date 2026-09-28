@@ -1,16 +1,28 @@
+import datetime
+
 from django.contrib import messages
-from django.contrib import messages
+
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.shortcuts import redirect, render
 from django.core import serializers
+from django.core.exceptions import PermissionDenied       
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+
 from main.models import Experience, Education
 from main.forms import EducationForm, ExperienceForm
-from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied       
-import datetime
+
+def is_editor_user(user):
+    if not user.is_authenticated:
+        return False
+    return (
+        user.is_superuser
+        or user.groups.filter(name="Editor").exists()
+        or user.has_perm("main.change_experience")
+        or user.has_perm("main.change_education")
+    )
 
 def show_main(request):
     last_login = request.COOKIES.get('last_login', 'Belum ada sesi login / Cookie tidak ditemukan')
@@ -45,7 +57,7 @@ def show_experience(request):
     }
     return render(request, "experience.html", context)
 
-@login_required(login_url="/login")
+@login_required(login_url="/login/")
 def create_experience(request):
     if not request.user.is_superuser:
         raise PermissionDenied
@@ -98,6 +110,27 @@ def toggle_star(request, experience_id):
             experience.starred_by.add(request.user)
 
     return redirect("main:show_experience")
+
+@login_required(login_url="/login/")
+def edit_experience(request, experience_id):
+    if not is_editor_user(request.user):
+        raise PermissionDenied
+    
+    experience = get_object_or_404(Experience, pk=experience_id)
+    form = ExperienceForm(
+        request.POST or None, request.FILES or None, instance=experience
+    )
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Pengalaman berhasil diperbarui!")
+        return redirect("main:show_experience")
+    context = {
+        "name": "Mirza",
+        "form": form,
+        "is_edit": True,
+        "experience": experience,
+    }
+    return render(request, "experience_form.html", context)
 
 # ================= EDUCATION ================= #
 
@@ -159,6 +192,24 @@ def delete_education(request, education_id):
         return redirect("main:show_education")
 
     return redirect("main:show_education")
+
+@login_required(login_url="/login/")
+def edit_education(request, education_id):
+    if not is_editor_user(request.user):
+        raise PermissionDenied
+    education = get_object_or_404(Education, pk=education_id)
+    form = EducationForm(request.POST or None, instance=education)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Riwayat edukasi berhasil diperbarui!")
+        return redirect("main:show_education")
+    context = {
+        "name": "Mirza",
+        "form": form,
+        "is_edit": True,
+        "education": education,
+    }
+    return render(request, "education_form.html", context)
 
 # ================= LOGIN/LOGOUT/REGISTER ================= #
 def register(request):
