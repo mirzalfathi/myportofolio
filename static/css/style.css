@@ -846,7 +846,8 @@ main {
 }
 
 .button-star.is-starred {
-    background: var(--accent);
+    background: var(--yellow);
+    color: var(--ink);
 }
 
 .star-count {
