@@ -8,8 +8,9 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core import serializers
 from django.core.exceptions import PermissionDenied       
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
 from main.models import Experience, Education
 from main.forms import EducationForm, ExperienceForm
@@ -41,23 +42,16 @@ def show_main(request):
 # ================= EXPERIENCE ================= #
 
 def show_experience(request):
-    json_response = get_experience_json(request)
-
-    experiences = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-    experiences = [experience.object for experience in experiences]
     title_query = request.GET.get("title", "").strip()
 
     context = {
-        "name": "Mirza",
-        "experience_list": experiences,
+        "name": "Burhan",
         "title_query": title_query,
+        "form": ExperienceForm(),
     }
     return render(request, "experience.html", context)
 
-@login_required(login_url="/login/")
+@login_required(login_url="/login")
 def create_experience(request):
     if not request.user.is_superuser:
         raise PermissionDenied
@@ -77,17 +71,38 @@ def create_experience(request):
 
 def get_experience_json(request):
     title_query = request.GET.get("title", "").strip()
-    experience = Experience.objects.all()
+    experiences = Experience.objects.prefetch_related('starred_by').all()
 
     if title_query:
-        experience = experience.filter(title__icontains=title_query)
+        experiences = experiences.filter(title__icontains=title_query)
 
-    experience_json = serializers.serialize("json", experience, use_natural_foreign_keys=True)
-    return HttpResponse(experience_json, content_type="application/json")
+    # Konstruksi data JSON secara manual agar bisa menyisipkan logika Star
+    data = []
+    for experience in experiences:
+        starred_users = experience.starred_by.all()
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join([u.username for u in starred_users])
 
-@login_required(login_url="/login/")
+        data.append({
+            "pk": str(experience.id),
+            "fields": {
+                "title": experience.title,
+                "description" : experience.description,
+                "category" : experience.category,
+                "thumbnail" : experience.thumbnail,
+                "started_at" : experience.started_at,
+                "ended_at" : experience.ended_at,
+                "starred_by" : [u.id for u in starred_users],
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+            }
+        })
+
+    return JsonResponse(data, safe=False)
+
+@login_required(login_url="/login")
 def delete_experience(request, experience_id):
-    if not request.user.is_suepruser:
+    if not request.user.is_superuser:
         raise PermissionDenied
     
     experience = get_object_or_404(Experience, pk=experience_id)
@@ -99,7 +114,7 @@ def delete_experience(request, experience_id):
 
     return redirect("main:show_experience")
 
-@login_required(login_url="/login/")
+@login_required(login_url="/login")
 def toggle_star(request, experience_id):
     experience = get_object_or_404(Experience, pk=experience_id)
 
@@ -111,7 +126,7 @@ def toggle_star(request, experience_id):
 
     return redirect("main:show_experience")
 
-@login_required(login_url="/login/")
+@login_required(login_url="/login")
 def edit_experience(request, experience_id):
     if not is_editor_user(request.user):
         raise PermissionDenied
@@ -131,6 +146,24 @@ def edit_experience(request, experience_id):
         "experience": experience,
     }
     return render(request, "experience_form.html", context)
+
+@require_POST
+def create_experience_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan pengalaman."},
+            status=403,
+        )
+
+    form = ExperienceForm(request.POST)
+    if form.is_valid():
+        project = form.save()
+        return JsonResponse(
+            {"message": "Pengalaman berhasil ditambahkan.", "pk": str(project.id)},
+            status=201,
+        )
+
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
 # ================= EDUCATION ================= #
 
@@ -179,9 +212,9 @@ def get_education_json(request):
     education_json = serializers.serialize("json", education)
     return HttpResponse(education_json, content_type="application/json")
 
-@login_required(login_url="/login/")
+@login_required(login_url="/login")
 def delete_education(request, education_id):
-    if not request.user.is_suepruser:
+    if not request.user.is_superuser:
         raise PermissionDenied
     
     education = get_object_or_404(Education, pk=education_id)
@@ -193,7 +226,7 @@ def delete_education(request, education_id):
 
     return redirect("main:show_education")
 
-@login_required(login_url="/login/")
+@login_required(login_url="/login")
 def edit_education(request, education_id):
     if not is_editor_user(request.user):
         raise PermissionDenied
