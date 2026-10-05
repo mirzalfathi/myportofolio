@@ -45,7 +45,7 @@ def show_experience(request):
     title_query = request.GET.get("title", "").strip()
 
     context = {
-        "name": "Burhan",
+        "name": "Mirza",
         "title_query": title_query,
         "form": ExperienceForm(),
     }
