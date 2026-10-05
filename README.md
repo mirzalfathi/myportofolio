@@ -23,6 +23,11 @@ Website portofolio pribadi Mirza Al Fathi, dibuat untuk menampilkan profil, riwa
 2. JSON lebih disukai dibanding XML karena lebih simpel, tanpa tag pembuka-penutup. Browser juga dapat langsung membaca JSON tanpa tools lain, beda dengan XML yang butuh parser sendiri. Selain itu JSON lebih gampang dibaca dan telah menjadi standar hampir semua bahasa pemrograman untuk mengirim data lewat API.
 3. Request masuk --> view yang sesuai dipanggil --> view ambil data dari database pakai Django. Tapi, data hasil ini masih berbentuk Python, bukan JSON. Nah, JSON hanya digunakan untuk tipe data yang bisa dibilang cukup sederhana seperti teks, angka, atau list, oleh karena itu kita harus melakukan serialization terlebih dahulu, lalu mengubah objek model jadi bentuk yang lebih sederhana (dictionary/list) pakai serializers.serialize(). Setelah itu, dibungkus jadi JsonResponse dan dikirim ke client biar bisa langsung dipakai/ditampilkan. Jadi serialization seperti jembatan antara Django dengan format JSON.
 
+### Tugas 5
+1. Debouncing adalah teknik untuk membuat sistem menunggu user selesai mengetik sebelum melakukan pencarian. Misalnya pengguna mengetik "laptop", sistem tidak langsung mencari setiap kali huruf diketik, tetapi menunggu sebentar sampai pengguna berhenti mengetik. Penting agar request ke server tidak terlalu banyak, sehingga pencarian lebih ringan.
+2. await berfungsi untuk menunggu sampai proses fetch() selesai sebelum melanjutkan ke proses selanjutnya. Jadi, data dari server sudah siap digunakan ketika kode berikutnya dijalankan. Kalau tidak menggunakan await, hasil dari fetch() masih berupa Promise, sehingga data belum langsung bisa digunakan. Akibatnya, kita bisa mendapatkan data yang belum selesai diambil.
+3. XSS adalah serangan ketika seseorang memasukkan kode ke halaman website, lalu kode tersebut dijalankan di browser pengguna. Pada AJAX/JavaScript, data dari server biasanya dimasukkan ke halaman secara langsung menggunakan JavaScript. Kalau data tersebut tidak diperiksa atau diamankan, kodenya bisa ikut dijalankan. Sedangkan pada template Django, data yang ditampilkan biasanya otomatis diamankan (di-escape) oleh Django, sehingga kode seperti script tidak akan langsung dianggap sebagai kode yang harus dijalankan.
+
 ---
 
 ## Deklarasi Penggunaan AI
@@ -32,3 +37,4 @@ Menggunakan Claude.ai untuk:
 3. Menyempurnakan halaman education dengan meminta menjelaskan tentang field dan model serta migrasi python
 4. Meminta petunjuk kenapa data di shell tidak ada di PWS, tetapi tidak bisa terselesaikan masalahnya (https://claude.ai/share/543e5e64-f628-43cf-b186-3894275d15b3)
 5. Membuat adjusting pada footer agar tidak terpotong dan meminta penjelasan form
+6. Mereview kesalahan yang dikerjakan pada kode untuk tugas 5 (https://claude.ai/share/341f557f-cca5-4e08-a8a0-8edb94ebf8c3)
