@@ -48,7 +48,9 @@ def show_experience(request):
         "name": "Mirza",
         "title_query": title_query,
         "form": ExperienceForm(),
+        "is_editor": is_editor_user(request.user),
     }
+
     return render(request, "experience.html", context)
 
 @login_required(login_url="/login")
@@ -87,12 +89,12 @@ def get_experience_json(request):
             "pk": str(experience.id),
             "fields": {
                 "title": experience.title,
-                "description" : experience.description,
-                "category" : experience.category,
-                "thumbnail" : experience.thumbnail,
-                "started_at" : experience.started_at,
-                "ended_at" : experience.ended_at,
-                "starred_by" : [u.id for u in starred_users],
+                "description": experience.description,
+                "category": experience.category,
+                "thumbnail": experience.thumbnail,
+                "started_at": experience.started_at,
+                "ended_at": experience.ended_at,
+                "star_count": starred_users.count(),
                 "is_starred": is_starred,
                 "starred_by_names": starred_by_names,
             }
