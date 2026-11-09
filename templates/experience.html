@@ -62,12 +62,13 @@
         const STAR_EXPERIENCE_ENDPOINT = "{% url 'api:experience-star' '00000000-0000-0000-0000-000000000000' %}";
         const IS_SUPERUSER = "{{ user.is_superuser|yesno:'true,false' }}" === "true";
         const IS_AUTHENTICATED = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
+        const IS_EDITOR = "{{ user.groups.all|join:',' }}" .includes("Editor");
 
         const loadingState = document.getElementById('loading');
         const errorState = document.getElementById('error');
         const emptyState = document.getElementById('empty');
         const gridContainer = document.getElementById('grid');
-        const searchForm = document.getElementById('project-search-form');
+        const searchForm = document.getElementById('experience-search-form');
         const searchInput = document.getElementById('search-input');
         const experienceForm = document.getElementById('experience-form');
         let experiencesAbortController;
@@ -101,24 +102,44 @@
         function buildExperienceCardElement(experience) {
             const article = document.createElement('article');
             article.className = 'experience-card';
-            const image = experience.project_image_url
-                ? `<img src="${escapeHtml(experience.project_image_url)}" alt="${escapeHtml(experience.title)}" class="project-image">` : '';
-            const link = experience.project_url
-                ? `<a href="${escapeHtml(experience.project_url)}" class="button">Open project</a>` : '';
+
+            const image = experience.thumbnail
+                ? `<img src="${escapeHtml(experience.thumbnail)}" alt="${escapeHtml(experience.title)}" class="experience-image">` : '';
+
+            const statusText = experience.ended_at
+                ? `${escapeHtml(String(experience.started_at))} - ${escapeHtml(String(experience.ended_at))}`
+                : `Sedang berjalan sejak ${escapeHtml(String(experience.started_at))}`;
+
             const star = IS_AUTHENTICATED
                 ? `<button type="button" class="button button-star${experience.is_starred ? ' is-starred' : ''}"
                     data-action="star" data-id="${escapeHtml(experience.id)}"
                     title="${escapeHtml(experience.starred_by_names)}">
+                    <span aria-hidden="true">★</span>
                     ${experience.is_starred ? 'Unstar' : 'Star'} (${experience.star_count})</button>`
                 : `<a href="{% url 'main:login' %}" class="button">Login to star (${experience.star_count})</a>`;
-            const remove = IS_SUPERUSER
+
+            const editBtn = (IS_SUPERUSER || IS_EDITOR)
+                ? `<button type="button" class="button button-edit"
+                    data-action="edit" data-id="${escapeHtml(experience.id)}"
+                    data-title="${escapeHtml(experience.title)}"
+                    data-description="${escapeHtml(experience.description)}"
+                    data-category="${escapeHtml(experience.category)}"
+                    data-started_at="${escapeHtml(String(experience.started_at))}"
+                    data-ended_at="${escapeHtml(String(experience.ended_at ?? ''))}">Ubah</button>` : '';
+
+            const deleteBtn = IS_SUPERUSER
                 ? `<button type="button" class="button button-danger" data-action="delete"
-                    data-id="${escapeHtml(experience.id)}">Delete</button>` : '';
-            article.innerHTML = `${image}<h2>${escapeHtml(experience.title)}</h2>
-                <span class="experience-category">${escapeHtml(experience.tech_stack)}</span>
+                    data-id="${escapeHtml(experience.id)}">Hapus</button>` : '';
+
+            article.innerHTML = `
+                ${image}
+                <h2>${escapeHtml(experience.title)}</h2>
+                <span class="experience-category">${escapeHtml(experience.category)}</span>
                 <p class="experience-description">${escapeHtml(experience.description)}</p>
-                <div class="project-card-actions"><div class="project-actions">
-                ${link}${star}${remove}</div></div>`;
+                <p class="experience-status">${statusText}</p>
+                <div class="experience-card-actions">
+                    ${star}${editBtn}${deleteBtn}
+                </div>`;
             return article;
         }
 
@@ -172,15 +193,15 @@
             try {
                 const fields = new FormData(experienceForm);
                 const payload = Object.fromEntries([
-                    'title', 'description', 'tech_stack', 'project_url', 'project_image_url',
-                ].map(name => [name, fields.get(name)]));
+                    'title', 'description', 'category', 'thumbnail', 'started_at', 'ended_at',
+                ].map(name => [name, fields.get(name) || null]));
                 await writeExperience(BASE_EXPERIENCES_ENDPOINT, 'POST', payload);
                 experienceForm.reset();
                 document.getElementById('add-experience-modal').hidePopover();
-                showToast('Success', 'Experience created.', 'success');
+                showToast('Berhasil', 'Pengalaman berhasil ditambahkan.', 'success');
                 await fetchExperiences(searchInput.value.trim());
             } catch (error) {
-                showToast('Could not create experience', error.message, 'error');
+                showToast('Gagal menambahkan', error.message, 'error');
             } finally {
                 button.disabled = false;
             }
@@ -192,18 +213,54 @@
             const button = event.target.closest('button[data-action]');
             if (!button || button.disabled) return;
             const action = button.dataset.action;
-            if (action === 'delete' && !window.confirm('Delete this experience?')) return;
-            button.disabled = true;
-            try {
-                const pattern = action === 'star' ? STAR_EXPERIENCE_ENDPOINT : DETAIL_EXPERIENCE_ENDPOINT;
-                await writeExperience(experienceEndpoint(pattern, button.dataset.id),
-                    action === 'star' ? 'POST' : 'DELETE');
-                showToast('Success', action === 'star' ? 'Star updated.' : 'Experience deleted.', 'success');
-                await fetchExperiences(searchInput.value.trim());
-            } catch (error) {
-                showToast('Request failed', error.message, 'error');
-            } finally {
-                button.disabled = false;
+
+            if (action === 'delete') {
+                if (!window.confirm('Yakin ingin menghapus pengalaman ini?')) return;
+                button.disabled = true;
+                try {
+                    await writeExperience(experienceEndpoint(DETAIL_EXPERIENCE_ENDPOINT, button.dataset.id), 'DELETE');
+                    showToast('Berhasil', 'Pengalaman berhasil dihapus.', 'success');
+                    await fetchExperiences(searchInput.value.trim());
+                } catch (error) {
+                    showToast('Gagal menghapus', error.message, 'error');
+                } finally {
+                    button.disabled = false;
+                }
+            }
+
+            if (action === 'star') {
+                button.disabled = true;
+                try {
+                    await writeExperience(experienceEndpoint(STAR_EXPERIENCE_ENDPOINT, button.dataset.id), 'POST');
+                    showToast('Berhasil', 'Star diperbarui.', 'success');
+                    await fetchExperiences(searchInput.value.trim());
+                } catch (error) {
+                    showToast('Gagal', error.message, 'error');
+                } finally {
+                    button.disabled = false;
+                }
+            }
+
+            if (action === 'edit') {
+                const id = button.dataset.id;
+                const title = prompt('Judul:', button.dataset.title);
+                if (title === null) return;
+                const description = prompt('Deskripsi:', button.dataset.description);
+                if (description === null) return;
+                button.disabled = true;
+                try {
+                    await writeExperience(
+                        experienceEndpoint(DETAIL_EXPERIENCE_ENDPOINT, id),
+                        'PATCH',
+                        { title, description },
+                    );
+                    showToast('Berhasil', 'Pengalaman berhasil diubah.', 'success');
+                    await fetchExperiences(searchInput.value.trim());
+                } catch (error) {
+                    showToast('Gagal mengubah', error.message, 'error');
+                } finally {
+                    button.disabled = false;
+                }
             }
         });
 
