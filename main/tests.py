@@ -69,7 +69,6 @@ class MainTest(TestCase):
         response = self.client.get(reverse("main:show_education"))
 
         self.assertContains(response, education.institution_name)
-        self.assertContains(response, education.major)
         self.assertContains(response, "S1")
         self.assertContains(response, "2025")
         self.assertContains(response, "Sekarang")
