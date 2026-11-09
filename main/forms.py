@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, Textarea, URLInput, NumberInput
+from django.forms import ModelForm, TextInput, Textarea, URLInput, NumberInput, Select
 from main.models import Education, Experience
 from django.core.exceptions import ValidationError
 from django.utils.html import strip_tags
@@ -111,10 +111,8 @@ class ExperienceForm(ModelForm):
                     "placeholder": "Deskripsi pengalaman",
                 }
             ),
-            "category": TextInput(
-                attrs={
-                    "placeholder": "misal: full-time",
-                }
+            "category": Select(
+                choices=Experience.EXPERIENCE_CHOICES,
             ),
             "thumbnail": URLInput(
                 attrs={
