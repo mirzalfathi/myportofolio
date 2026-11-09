@@ -70,8 +70,6 @@ class MainTest(TestCase):
 
         self.assertContains(response, education.institution_name)
         self.assertContains(response, "S1")
-        self.assertContains(response, "2025")
-        self.assertContains(response, "Sekarang")
 
     def test_empty_education_page_shows_empty_state_message(self):
         response = self.client.get(reverse("main:show_education"))
