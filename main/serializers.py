@@ -8,6 +8,7 @@ class ExperienceSerializer(serializers.ModelSerializer):
     star_count = serializers.SerializerMethodField()
     is_starred = serializers.SerializerMethodField()
     starred_by_names = serializers.SerializerMethodField()
+    is_ongoing = serializers.ReadOnlyField()
 
     class Meta:
         model = Experience
@@ -18,8 +19,6 @@ class ExperienceSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ["id"]
 
-    is_ongoing = serializers.ReadOnlyField()
-
     def validate_title(self, value):
         value = strip_tags(value).strip()
         if not value:
@@ -28,6 +27,11 @@ class ExperienceSerializer(serializers.ModelSerializer):
 
     def validate_description(self, value):
         return strip_tags(value)
+
+    def validate_thumbnail(self, value):
+        if value:
+            value = strip_tags(value).strip()
+        return value
 
     def get_star_count(self, obj):
         return obj.starred_by.count()
